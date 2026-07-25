@@ -1,50 +1,57 @@
-CREATE TABLE hotel
-(
-    hotel_id SERIAL PRIMARY KEY,
-    name     VARCHAR(100) NOT NULL,
-    ort      VARCHAR(100) NOT NULL
-);
+TRUNCATE zimmer_buchung, buchung, zimmer, gast, kategorie, hotel
+    RESTART IDENTITY CASCADE;
 
-CREATE TABLE kategorie
-(
-    kategorie_id    SERIAL PRIMARY KEY,
-    bezeichnung     VARCHAR(50)   NOT NULL UNIQUE,
-    preis_pro_nacht NUMERIC(6, 2) NOT NULL CHECK (preis_pro_nacht > 0)
-);
+------------ HOTEL ----------
+INSERT INTO hotel (name, ort)
+VALUES ('Alpenblick', 'Interlaken'),
+       ('Seehof', 'Luzern')
+;
 
-CREATE TABLE gast
-(
-    gast_id      SERIAL PRIMARY KEY,
-    nachname     VARCHAR(50)  NOT NULL,
-    vorname      VARCHAR(50)  NOT NULL,
-    email        VARCHAR(100) NOT NULL UNIQUE,
-    telefon      VARCHAR(20),
-    geburtsdatum DATE         NOT NULL CHECK (geburtsdatum <= CURRENT_DATE - INTERVAL '18 years')
-    );
+------------ KATEGORIE ----------
+INSERT INTO kategorie (bezeichnung, preis_pro_nacht)
+VALUES ('Einzelzimmer', 120.00),
+       ('Doppelzimmer', 180.00),
+       ('Suite', 250.00),
+       ('Familienzimmer', 320.00)
+;
 
-CREATE TABLE zimmer
-(
-    zimmer_id    SERIAL PRIMARY KEY,
-    hotel_id     INT         NOT NULL REFERENCES hotel (hotel_id),
-    kategorie_id INT         NOT NULL REFERENCES kategorie (kategorie_id),
-    zimmer_nr    VARCHAR(10) NOT NULL,
-    UNIQUE (hotel_id, zimmer_nr)
-);
+------------ GAST ----------
+INSERT INTO gast (nachname, vorname, email, telefon, geburtsdatum)
+VALUES ('Meier', 'Anna', 'a.meier@mail.ch', '+41 79 123 45 67', '1990-05-14'),
+       ('Keller', 'Beat', 'b.keller@mail.ch', '+41 78 222 33 44', '1985-11-02'),
+       ('Studer', 'Claudia', 'c.studer@mail.ch', NULL, '1998-03-21'),
+       ('Rossi', 'Marco', 'm.rossi@mail.ch', '+41 76 555 66 77', '1979-07-30'),
+       ('Baumann', 'Nina', 'n.baumann@mail.ch', '+41 79 888 99 00', '2005-01-10')
+;
 
-CREATE TABLE buchung
-(
-    buchung_id   SERIAL PRIMARY KEY,
-    gast_id      INT         NOT NULL REFERENCES gast (gast_id),
-    anreisedatum DATE        NOT NULL,
-    abreisedatum DATE        NOT NULL,
-    status       VARCHAR(20) NOT NULL DEFAULT 'bestätigt' CHECK (status IN ('bestätigt', 'storniert', 'abgeschlossen')),
-    CHECK (abreisedatum > anreisedatum)
-);
+------------ ZIMMER ----------
+INSERT INTO zimmer (hotel_id, kategorie_id, zimmer_nr)
+VALUES (1, 2, '101'),
+       (1, 2, '102'),
+       (1, 3, '201'),
+       (1, 4, '305'),
+       (2, 1, '101'),
+       (2, 1, '012'),
+       (2, 2, '210')
+;
 
-CREATE TABLE zimmer_buchung
-(
-    zimmer_id       INT           NOT NULL REFERENCES zimmer (zimmer_id),
-    buchung_id      INT           NOT NULL REFERENCES buchung (buchung_id),
-    preis_pro_nacht NUMERIC(6, 2) NOT NULL CHECK (preis_pro_nacht > 0),
-    PRIMARY KEY (zimmer_id, buchung_id)
-);
+------------ BUCHUNG ----------
+INSERT INTO buchung (gast_id, anreisedatum, abreisedatum, status)
+VALUES (1, '2026-09-10', '2026-09-13', 'bestätigt'),
+       (1, '2026-11-05', '2026-11-07', 'bestätigt'),
+       (2, '2026-09-20', '2026-09-22', 'abgeschlossen'),
+       (3, '2026-10-01', '2026-10-04', 'storniert'),
+       (4, '2026-12-20', '2026-12-27', 'bestätigt'),
+       (5, '2026-09-11', '2026-09-12', 'bestätigt')
+;
+
+------------ ZIMMER_BUCHUNG ----------
+INSERT INTO zimmer_buchung (zimmer_id, buchung_id, preis_pro_nacht)
+VALUES (1, 1, 180.00),
+       (3, 1, 250.00),
+       (2, 2, 180.00),
+       (6, 3, 110.00),
+       (7, 4, 180.00),
+       (4, 5, 300.00),
+       (5, 6, 120.00)
+;
