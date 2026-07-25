@@ -16,13 +16,12 @@ import CategoryIcon from '@mui/icons-material/Category';
 
 const App = () => {
     const location = useLocation();
-    const handleChange = () => {}
 
     return (
         <>
             <CssBaseline/>
             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <Tabs onChange={handleChange} aria-label="basic tabs example" value={location.pathname}>
+                <Tabs aria-label="basic tabs example" value={location.pathname}>
                     <Tab label="Home" icon={<HomeIcon />} iconPosition="start" value="/" component={Link} to="/"/>
                     <Tab label="Buchungen" icon={<EventAvailable />} iconPosition="start" value="/bookings" component={Link} to="/bookings"/>
                     <Tab label="Hotels" icon={<HotelIcon />} iconPosition="start" value="/hotels" component={Link} to="/hotels"/>
