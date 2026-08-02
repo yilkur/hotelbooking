@@ -10,7 +10,7 @@ FROM buchung b
          JOIN gast g ON g.gast_id = b.gast_id
 WHERE b.status = 'bestätigt';
 
--- Abfrage 3: Anzahl Zimmer pro Hotel
+-- Abfrage 3: Anzahl Zimmer pro Hotelx
 SELECT h.name AS hotel, COUNT(*) AS anzahl_zimmer
 FROM hotel h
          JOIN zimmer z ON z.hotel_id = h.hotel_id
