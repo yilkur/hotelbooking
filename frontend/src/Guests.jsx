@@ -17,6 +17,8 @@ import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 
+const formatDate = isoDate => new Date(isoDate).toLocaleDateString('de-CH')
+
 const Guests = () => {
     const url = "http://localhost:8080/guests"
     const [guests, setGuests] = useState([])
@@ -215,7 +217,7 @@ const Guests = () => {
                                 <TableCell>{guest.vorname}</TableCell>
                                 <TableCell>{guest.email}</TableCell>
                                 <TableCell>{guest.telefon}</TableCell>
-                                <TableCell>{guest.geburtsdatum}</TableCell>
+                                <TableCell>{formatDate(guest.geburtsdatum)}</TableCell>
                                 <TableCell>
                                     <Button onClick={() => handleDelete(guest.gastId)} variant="outlined"
                                             startIcon={<DeleteIcon/>}
