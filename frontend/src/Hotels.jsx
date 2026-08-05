@@ -10,33 +10,33 @@ import {
     TableRow,
     TextField,
     Typography
-} from "@mui/material";
-import {useEffect, useState} from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+} from "@mui/material"
+import {useEffect, useState} from "react"
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
 
 const Hotels = () => {
-    const url = "http://localhost:8080/hotels";
-    const [hotels, setHotels] = useState([]);
-    const [showSuccess, setShowSuccess] = useState(false);
-    const [editingHotel, setEditingHotel] = useState(null);
+    const url = "http://localhost:8080/hotels"
+    const [hotels, setHotels] = useState([])
+    const [showSuccess, setShowSuccess] = useState(false)
+    const [editingHotel, setEditingHotel] = useState(null)
 
     useEffect(() => {
         fetch(url)
             .then(response => response.json())
             .then(data => setHotels(data))
-            .catch(e => console.error(e));
-    }, []);
+            .catch(e => console.error(e))
+    }, [])
 
     const handleSubmit = e => {
-        e.preventDefault();
+        e.preventDefault()
 
-        const form = e.target;
-        const formData = new FormData(form);
-        const hotelName = formData.get("hotelname");
-        const ort = formData.get("ort");
+        const form = e.target
+        const formData = new FormData(form)
+        const hotelName = formData.get("hotelname")
+        const ort = formData.get("ort")
 
-        const newHotel = {'name': hotelName, ort};
+        const newHotel = {'name': hotelName, ort}
 
         fetch(url, {
             method: 'POST',
@@ -47,19 +47,19 @@ const Hotels = () => {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Netzwerk-Fehler');
+                    throw new Error('Netzwerk-Fehler')
                 }
-                return response.json();
+                return response.json()
             })
             .then(result => {
-                console.log('Erfolg:', result);
-                setHotels(prevHotels => [...prevHotels, result]);
-                form.reset();
-                setShowSuccess(true);
+                console.log('Erfolg:', result)
+                setHotels(prevHotels => [...prevHotels, result])
+                form.reset()
+                setShowSuccess(true)
             })
             .catch(error => {
-                console.error('Fehler:', error);
-            });
+                console.error('Fehler:', error)
+            })
     }
 
     const handleDelete = id => {
@@ -68,22 +68,22 @@ const Hotels = () => {
         })
             .then(result => {
                 if (result.ok) {
-                    setHotels(prevHotels => prevHotels.filter(hotel => hotel.hotelId !== id));
-                    console.log('Erfolgreich gelöscht!');
+                    setHotels(prevHotels => prevHotels.filter(hotel => hotel.hotelId !== id))
+                    console.log('Erfolgreich gelöscht!')
                 } else {
-                    console.error('Fehler beim Löschen des Elements');
+                    console.error('Fehler beim Löschen des Elements')
                 }
             })
             .catch(error => {
-                console.error('Netzwerkfehler:', error);
-            });
+                console.error('Netzwerkfehler:', error)
+            })
     }
 
     const handleUpdate = e => {
-        e.preventDefault();
+        e.preventDefault()
 
-        const formData = new FormData(e.target);
-        const updatedHotel = {name: formData.get("hotelname"), ort: formData.get("ort")};
+        const formData = new FormData(e.target)
+        const updatedHotel = {name: formData.get("hotelname"), ort: formData.get("ort")}
 
         fetch(`${url}/${editingHotel.hotelId}`, {
             method: 'PUT',
@@ -100,7 +100,7 @@ const Hotels = () => {
                 }))
                 setEditingHotel(null)
             })
-            .catch(error => console.error(error));
+            .catch(error => console.error(error))
     }
 
     return (
@@ -221,7 +221,7 @@ const Hotels = () => {
                 </Alert>
             </Snackbar>
         </Box>
-    );
+    )
 }
 
-export default Hotels;
+export default Hotels

@@ -1,21 +1,21 @@
-import CssBaseline from '@mui/material/CssBaseline';
-import {Box, Tab, Tabs} from "@mui/material";
-import {Link, Route, Routes, useLocation} from "react-router-dom";
-import Home from "./Home.jsx";
-import Bookings from "./Bookings.jsx";
-import Categories from "./Categories.jsx";
-import Guests from "./Guests.jsx";
-import Rooms from "./Rooms.jsx";
-import Hotels from "./Hotels.jsx";
-import EventAvailable from '@mui/icons-material/EventAvailable';
-import KingBed from '@mui/icons-material/KingBed';
-import HomeIcon from '@mui/icons-material/Home';
-import HotelIcon from '@mui/icons-material/Hotel';
-import PersonIcon from '@mui/icons-material/Person';
-import CategoryIcon from '@mui/icons-material/Category';
+import CssBaseline from '@mui/material/CssBaseline'
+import {Box, Tab, Tabs} from "@mui/material"
+import {Link, Route, Routes, useLocation} from "react-router-dom"
+import Home from "./Home.jsx"
+import Bookings from "./Bookings.jsx"
+import Categories from "./Categories.jsx"
+import Guests from "./Guests.jsx"
+import Rooms from "./Rooms.jsx"
+import Hotels from "./Hotels.jsx"
+import EventAvailable from '@mui/icons-material/EventAvailable'
+import KingBed from '@mui/icons-material/KingBed'
+import HomeIcon from '@mui/icons-material/Home'
+import HotelIcon from '@mui/icons-material/Hotel'
+import PersonIcon from '@mui/icons-material/Person'
+import CategoryIcon from '@mui/icons-material/Category'
 
 const App = () => {
-    const location = useLocation();
+    const location = useLocation()
 
     return (
         <>
