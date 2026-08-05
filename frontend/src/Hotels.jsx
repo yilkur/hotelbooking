@@ -2,7 +2,7 @@ import {
     Alert,
     Box,
     Button, Dialog, DialogActions, DialogContent, DialogTitle,
-    Grid, Snackbar,
+    Grid, Paper, Snackbar,
     Table,
     TableBody,
     TableCell,
@@ -12,6 +12,7 @@ import {
     Typography
 } from "@mui/material"
 import {useEffect, useState} from "react"
+import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 
@@ -109,66 +110,70 @@ const Hotels = () => {
                 Hotels
             </Typography>
 
-            <form onSubmit={handleSubmit}>
-                <Grid container spacing={2} sx={{mt: 3}}>
-                    <Grid xs={12} sm={6}>
-                        <TextField
-                            name="hotelname"
-                            id="edit-hotelname"
-                            label="Hotelname"
-                            variant="outlined"
-                            required
-                            fullWidth/>
+            <Paper variant="outlined" sx={{p: 3, mt: 3}}>
+                <form onSubmit={handleSubmit}>
+                    <Grid container spacing={2}>
+                        <Grid xs={12} sm={6}>
+                            <TextField
+                                name="hotelname"
+                                id="edit-hotelname"
+                                label="Hotelname"
+                                variant="outlined"
+                                required
+                                fullWidth/>
+                        </Grid>
+                        <Grid xs={12} sm={6}>
+                            <TextField
+                                name="ort"
+                                id="edit-ort"
+                                label="Ort"
+                                variant="outlined"
+                                required
+                                fullWidth/>
+                        </Grid>
+                        <Grid xs={12}>
+                            <Button variant="contained" type="submit" startIcon={<AddIcon/>} sx={{height: "100%"}}>
+                                Hotel hinzufügen
+                            </Button>
+                        </Grid>
                     </Grid>
-                    <Grid xs={12} sm={6}>
-                        <TextField
-                            name="ort"
-                            id="edit-ort"
-                            label="Ort"
-                            variant="outlined"
-                            required
-                            fullWidth/>
-                    </Grid>
-                    <Grid xs={12}>
-                        <Button variant="contained" type="submit" sx={{height: "100%"}}>
-                            Hotel hinzufügen
-                        </Button>
-                    </Grid>
-                </Grid>
-            </form>
+                </form>
+            </Paper>
 
-            <Typography variant="h4" component="h2" sx={{mt: 6}}>
-                Übersicht
-            </Typography>
+            <Paper variant="outlined" sx={{p: 3, mt: 3}}>
+                <Typography variant="h4" component="h2">
+                    Übersicht
+                </Typography>
 
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Ort</TableCell>
-                        <TableCell></TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {hotels.map(hotel => (
-                        <TableRow key={hotel.hotelId}>
-                            <TableCell>{hotel.name}</TableCell>
-                            <TableCell>{hotel.ort}</TableCell>
-                            <TableCell>
-                                <Button onClick={() => handleDelete(hotel.hotelId)} variant="outlined"
-                                        startIcon={<DeleteIcon/>}
-                                        sx={{mr: 2}}>
-                                    Löschen
-                                </Button>
-                                <Button onClick={() => setEditingHotel(hotel)} variant="outlined"
-                                        startIcon={<EditIcon/>}>
-                                    Bearbeiten
-                                </Button>
-                            </TableCell>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Ort</TableCell>
+                            <TableCell></TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                    </TableHead>
+                    <TableBody>
+                        {hotels.map(hotel => (
+                            <TableRow key={hotel.hotelId}>
+                                <TableCell>{hotel.name}</TableCell>
+                                <TableCell>{hotel.ort}</TableCell>
+                                <TableCell>
+                                    <Button onClick={() => handleDelete(hotel.hotelId)} variant="outlined"
+                                            startIcon={<DeleteIcon/>}
+                                            sx={{mr: 2}}>
+                                        Löschen
+                                    </Button>
+                                    <Button onClick={() => setEditingHotel(hotel)} variant="outlined"
+                                            startIcon={<EditIcon/>}>
+                                        Bearbeiten
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </Paper>
 
             <Dialog open={editingHotel != null} onClose={() => setEditingHotel(null)}>
                 <DialogTitle>Hotel bearbeiten</DialogTitle>
