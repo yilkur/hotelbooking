@@ -21,6 +21,7 @@ const Hotels = () => {
     const [hotels, setHotels] = useState([])
     const [showSuccess, setShowSuccess] = useState(false)
     const [editingHotel, setEditingHotel] = useState(null)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
         fetch(url)
@@ -48,7 +49,9 @@ const Hotels = () => {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Netzwerk-Fehler')
+                    return response.text().then(text => {
+                        throw new Error(text || 'Unbekannter Fehler')
+                    })
                 }
                 return response.json()
             })
@@ -60,6 +63,7 @@ const Hotels = () => {
             })
             .catch(error => {
                 console.error('Fehler:', error)
+                setErrorMessage(error.message)
             })
     }
 
@@ -67,16 +71,19 @@ const Hotels = () => {
         fetch(`${url}/${id}`, {
             method: 'DELETE'
         })
-            .then(result => {
-                if (result.ok) {
+            .then(response => {
+                if (response.ok) {
                     setHotels(prevHotels => prevHotels.filter(hotel => hotel.hotelId !== id))
                     console.log('Erfolgreich gelöscht!')
-                } else {
-                    console.error('Fehler beim Löschen des Elements')
+                    return
                 }
+                return response.text().then(text => {
+                    throw new Error(text || 'Fehler beim Löschen des Elements')
+                })
             })
             .catch(error => {
-                console.error('Netzwerkfehler:', error)
+                console.error('Fehler:', error)
+                setErrorMessage(error.message)
             })
     }
 
@@ -91,7 +98,14 @@ const Hotels = () => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(updatedHotel)
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(text || 'Unbekannter Fehler')
+                    })
+                }
+                return response.json()
+            })
             .then(result => {
                 setHotels(prevHotels => prevHotels.map(hotel => {
                     if (hotel.hotelId === editingHotel.hotelId) {
@@ -101,7 +115,10 @@ const Hotels = () => {
                 }))
                 setEditingHotel(null)
             })
-            .catch(error => console.error(error))
+            .catch(error => {
+                console.error(error)
+                setErrorMessage(error.message)
+            })
     }
 
     return (
@@ -223,6 +240,18 @@ const Hotels = () => {
             >
                 <Alert severity="success" variant="filled" sx={{fontSize: "1.3rem", alignItems: "center"}}>
                     Hotel wurde erfasst.
+                </Alert>
+            </Snackbar>
+
+            <Snackbar
+                open={errorMessage != null}
+                autoHideDuration={5000}
+                onClose={() => setErrorMessage(null)}
+                anchorOrigin={{vertical: "top", horizontal: "right"}}
+            >
+                <Alert severity="error" variant="filled" onClose={() => setErrorMessage(null)}
+                       sx={{fontSize: "1.3rem", alignItems: "center"}}>
+                    {errorMessage}
                 </Alert>
             </Snackbar>
         </Box>

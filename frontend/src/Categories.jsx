@@ -21,6 +21,7 @@ const Categories = () => {
     const [categories, setCategories] = useState([])
     const [showSuccess, setShowSuccess] = useState(false)
     const [editingCategory, setEditingCategory] = useState(null)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     useEffect(() => {
         fetch(url)
@@ -48,7 +49,9 @@ const Categories = () => {
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Netzwerk-Fehler')
+                    return response.text().then(text => {
+                        throw new Error(text || 'Unbekannter Fehler')
+                    })
                 }
                 return response.json()
             })
@@ -60,6 +63,7 @@ const Categories = () => {
             })
             .catch(error => {
                 console.error('Fehler:', error)
+                setErrorMessage(error.message)
             })
     }
 
@@ -67,16 +71,19 @@ const Categories = () => {
         fetch(`${url}/${id}`, {
             method: 'DELETE'
         })
-            .then(result => {
-                if (result.ok) {
+            .then(response => {
+                if (response.ok) {
                     setCategories(prevCategories => prevCategories.filter(category => category.kategorieId !== id))
                     console.log('Erfolgreich gelöscht!')
-                } else {
-                    console.error('Fehler beim Löschen des Elements')
+                    return
                 }
+                return response.text().then(text => {
+                    throw new Error(text || 'Fehler beim Löschen des Elements')
+                })
             })
             .catch(error => {
-                console.error('Netzwerkfehler:', error)
+                console.error('Fehler:', error)
+                setErrorMessage(error.message)
             })
     }
 
@@ -94,7 +101,14 @@ const Categories = () => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(updatedCategory)
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(text || 'Unbekannter Fehler')
+                    })
+                }
+                return response.json()
+            })
             .then(result => {
                 setCategories(prevCategories => prevCategories.map(category => {
                     if (category.kategorieId === editingCategory.kategorieId) {
@@ -104,7 +118,10 @@ const Categories = () => {
                 }))
                 setEditingCategory(null)
             })
-            .catch(error => console.error(error))
+            .catch(error => {
+                console.error(error)
+                setErrorMessage(error.message)
+            })
     }
 
     return (
@@ -131,7 +148,7 @@ const Categories = () => {
                                 id="edit-preisProNacht"
                                 label="Preis pro Nacht"
                                 type="number"
-                                inputProps={{step: "0.01", min: "0"}}
+                                slotProps={{htmlInput: {step: "0.01", min: "0"}}}
                                 variant="outlined"
                                 required
                                 fullWidth/>
@@ -203,7 +220,7 @@ const Categories = () => {
                                     id="preisProNacht"
                                     label="Preis pro Nacht"
                                     type="number"
-                                    inputProps={{step: "0.01", min: "0"}}
+                                    slotProps={{htmlInput: {step: "0.01", min: "0"}}}
                                     variant="outlined"
                                     required
                                     defaultValue={editingCategory?.preisProNacht}
@@ -230,6 +247,18 @@ const Categories = () => {
             >
                 <Alert severity="success" variant="filled" sx={{fontSize: "1.3rem", alignItems: "center"}}>
                     Kategorie wurde erfasst.
+                </Alert>
+            </Snackbar>
+
+            <Snackbar
+                open={errorMessage != null}
+                autoHideDuration={5000}
+                onClose={() => setErrorMessage(null)}
+                anchorOrigin={{vertical: "top", horizontal: "right"}}
+            >
+                <Alert severity="error" variant="filled" onClose={() => setErrorMessage(null)}
+                       sx={{fontSize: "1.3rem", alignItems: "center"}}>
+                    {errorMessage}
                 </Alert>
             </Snackbar>
         </Box>
