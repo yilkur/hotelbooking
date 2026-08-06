@@ -133,7 +133,7 @@ const Categories = () => {
             <Paper variant="outlined" sx={{p: 3, mt: 3}}>
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
-                        <Grid xs={12} sm={6}>
+                        <Grid size={{xs: 12, sm: 6}}>
                             <TextField
                                 name="bezeichnung"
                                 id="edit-bezeichnung"
@@ -142,7 +142,7 @@ const Categories = () => {
                                 required
                                 fullWidth/>
                         </Grid>
-                        <Grid xs={12} sm={6}>
+                        <Grid size={{xs: 12, sm: 6}}>
                             <TextField
                                 name="preisProNacht"
                                 id="edit-preisProNacht"
@@ -153,7 +153,7 @@ const Categories = () => {
                                 required
                                 fullWidth/>
                         </Grid>
-                        <Grid xs={12}>
+                        <Grid size={12} sx={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button variant="contained" type="submit" startIcon={<AddIcon/>} sx={{height: "100%"}}>
                                 Kategorie hinzufügen
                             </Button>
@@ -163,10 +163,6 @@ const Categories = () => {
             </Paper>
 
             <Paper variant="outlined" sx={{p: 3, mt: 3}}>
-                <Typography variant="h4" component="h2">
-                    Übersicht
-                </Typography>
-
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -204,7 +200,7 @@ const Categories = () => {
 
                     <form onSubmit={handleUpdate}>
                         <Grid container spacing={2} sx={{mt: 3}}>
-                            <Grid xs={12} sm={6}>
+                            <Grid size={{xs: 12, sm: 6}}>
                                 <TextField
                                     name="bezeichnung"
                                     id="bezeichnung"
@@ -214,7 +210,7 @@ const Categories = () => {
                                     defaultValue={editingCategory?.bezeichnung}
                                     fullWidth/>
                             </Grid>
-                            <Grid xs={12} sm={6}>
+                            <Grid size={{xs: 12, sm: 6}}>
                                 <TextField
                                     name="preisProNacht"
                                     id="preisProNacht"
@@ -226,7 +222,7 @@ const Categories = () => {
                                     defaultValue={editingCategory?.preisProNacht}
                                     fullWidth/>
                             </Grid>
-                            <Grid xs={12}>
+                            <Grid size={12}>
                                 <Button variant="contained" type="submit" sx={{height: "100%"}}>
                                     Kategorie anpassen
                                 </Button>

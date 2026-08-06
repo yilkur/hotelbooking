@@ -1,5 +1,5 @@
 import CssBaseline from '@mui/material/CssBaseline'
-import {Box, Tab, Tabs} from "@mui/material"
+import {Box, Container, Tab, Tabs} from "@mui/material"
 import {Link, Route, Routes, useLocation} from "react-router-dom"
 import Home from "./Home.jsx"
 import Bookings from "./Bookings.jsx"
@@ -32,14 +32,16 @@ const App = () => {
                 </Tabs>
             </Box>
 
-            <Routes>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/bookings" element={<Bookings/>}/>
-                <Route path="/categories" element={<Categories/>}/>
-                <Route path="/guests" element={<Guests/>}/>
-                <Route path="/rooms" element={<Rooms/>}/>
-                <Route path="/hotels" element={<Hotels/>}/>
-            </Routes>
+            <Container maxWidth="xl" disableGutters>
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/bookings" element={<Bookings/>}/>
+                    <Route path="/categories" element={<Categories/>}/>
+                    <Route path="/guests" element={<Guests/>}/>
+                    <Route path="/rooms" element={<Rooms/>}/>
+                    <Route path="/hotels" element={<Hotels/>}/>
+                </Routes>
+            </Container>
         </>
     )
 }

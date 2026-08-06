@@ -142,7 +142,7 @@ const Guests = () => {
             <Paper variant="outlined" sx={{p: 3, mt: 3}}>
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
-                        <Grid xs={12} sm={6}>
+                        <Grid size={{xs: 12, sm: 6}}>
                             <TextField
                                 name="nachname"
                                 id="edit-nachname"
@@ -151,7 +151,7 @@ const Guests = () => {
                                 required
                                 fullWidth/>
                         </Grid>
-                        <Grid xs={12} sm={6}>
+                        <Grid size={{xs: 12, sm: 6}}>
                             <TextField
                                 name="vorname"
                                 id="edit-vorname"
@@ -160,7 +160,7 @@ const Guests = () => {
                                 required
                                 fullWidth/>
                         </Grid>
-                        <Grid xs={12} sm={6}>
+                        <Grid size={{xs: 12, sm: 6}}>
                             <TextField
                                 name="email"
                                 id="edit-email"
@@ -170,7 +170,7 @@ const Guests = () => {
                                 required
                                 fullWidth/>
                         </Grid>
-                        <Grid xs={12} sm={6}>
+                        <Grid size={{xs: 12, sm: 6}}>
                             <TextField
                                 name="telefon"
                                 id="edit-telefon"
@@ -178,7 +178,7 @@ const Guests = () => {
                                 variant="outlined"
                                 fullWidth/>
                         </Grid>
-                        <Grid xs={12} sm={6}>
+                        <Grid size={{xs: 12, sm: 6}}>
                             <TextField
                                 name="geburtsdatum"
                                 id="edit-geburtsdatum"
@@ -189,7 +189,7 @@ const Guests = () => {
                                 slotProps={{inputLabel: {shrink: true}}}
                                 fullWidth/>
                         </Grid>
-                        <Grid xs={12}>
+                        <Grid size={12} sx={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button variant="contained" type="submit" startIcon={<AddIcon/>} sx={{height: "100%"}}>
                                 Gast hinzufügen
                             </Button>
@@ -242,7 +242,7 @@ const Guests = () => {
 
                     <form onSubmit={handleUpdate}>
                         <Grid container spacing={2} sx={{mt: 3}}>
-                            <Grid xs={12} sm={6}>
+                            <Grid size={{xs: 12, sm: 6}}>
                                 <TextField
                                     name="nachname"
                                     id="nachname"
@@ -252,7 +252,7 @@ const Guests = () => {
                                     defaultValue={editingGuest?.nachname}
                                     fullWidth/>
                             </Grid>
-                            <Grid xs={12} sm={6}>
+                            <Grid size={{xs: 12, sm: 6}}>
                                 <TextField
                                     name="vorname"
                                     id="vorname"
@@ -262,7 +262,7 @@ const Guests = () => {
                                     defaultValue={editingGuest?.vorname}
                                     fullWidth/>
                             </Grid>
-                            <Grid xs={12} sm={6}>
+                            <Grid size={{xs: 12, sm: 6}}>
                                 <TextField
                                     name="email"
                                     id="email"
@@ -273,7 +273,7 @@ const Guests = () => {
                                     defaultValue={editingGuest?.email}
                                     fullWidth/>
                             </Grid>
-                            <Grid xs={12} sm={6}>
+                            <Grid size={{xs: 12, sm: 6}}>
                                 <TextField
                                     name="telefon"
                                     id="telefon"
@@ -282,7 +282,7 @@ const Guests = () => {
                                     defaultValue={editingGuest?.telefon}
                                     fullWidth/>
                             </Grid>
-                            <Grid xs={12} sm={6}>
+                            <Grid size={{xs: 12, sm: 6}}>
                                 <TextField
                                     name="geburtsdatum"
                                     id="geburtsdatum"
@@ -294,7 +294,7 @@ const Guests = () => {
                                     defaultValue={editingGuest?.geburtsdatum}
                                     fullWidth/>
                             </Grid>
-                            <Grid xs={12}>
+                            <Grid size={12}>
                                 <Button variant="contained" type="submit" sx={{height: "100%"}}>
                                     Gast anpassen
                                 </Button>

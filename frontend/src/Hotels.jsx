@@ -130,7 +130,7 @@ const Hotels = () => {
             <Paper variant="outlined" sx={{p: 3, mt: 3}}>
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
-                        <Grid xs={12} sm={6}>
+                        <Grid size={{xs: 12, sm: 6}}>
                             <TextField
                                 name="hotelname"
                                 id="edit-hotelname"
@@ -139,7 +139,7 @@ const Hotels = () => {
                                 required
                                 fullWidth/>
                         </Grid>
-                        <Grid xs={12} sm={6}>
+                        <Grid size={{xs: 12, sm: 6}}>
                             <TextField
                                 name="ort"
                                 id="edit-ort"
@@ -148,7 +148,7 @@ const Hotels = () => {
                                 required
                                 fullWidth/>
                         </Grid>
-                        <Grid xs={12}>
+                        <Grid size={12} sx={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button variant="contained" type="submit" startIcon={<AddIcon/>} sx={{height: "100%"}}>
                                 Hotel hinzufügen
                             </Button>
@@ -158,10 +158,6 @@ const Hotels = () => {
             </Paper>
 
             <Paper variant="outlined" sx={{p: 3, mt: 3}}>
-                <Typography variant="h4" component="h2">
-                    Übersicht
-                </Typography>
-
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -199,7 +195,7 @@ const Hotels = () => {
 
                     <form onSubmit={handleUpdate}>
                         <Grid container spacing={2} sx={{mt: 3}}>
-                            <Grid xs={12} sm={6}>
+                            <Grid size={{xs: 12, sm: 6}}>
                                 <TextField
                                     name="hotelname"
                                     id="hotelname"
@@ -209,7 +205,7 @@ const Hotels = () => {
                                     defaultValue={editingHotel?.name}
                                     fullWidth/>
                             </Grid>
-                            <Grid xs={12} sm={6}>
+                            <Grid size={{xs: 12, sm: 6}}>
                                 <TextField
                                     name="ort"
                                     id="ort"
@@ -219,7 +215,7 @@ const Hotels = () => {
                                     defaultValue={editingHotel?.ort}
                                     fullWidth/>
                             </Grid>
-                            <Grid xs={12}>
+                            <Grid size={12}>
                                 <Button variant="contained" type="submit" sx={{height: "100%"}}>
                                     Hotel anpassen
                                 </Button>
