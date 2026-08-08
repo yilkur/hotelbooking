@@ -26,6 +26,7 @@ const Rooms = () => {
     const [showSuccess, setShowSuccess] = useState(false)
     const [editingRoom, setEditingRoom] = useState(null)
     const [errorMessage, setErrorMessage] = useState(null)
+    const [formKey, setFormKey] = useState(0)
 
     const getHotelName = hotelId => hotels.find(hotel => hotel.hotelId === hotelId)?.name ?? hotelId
     const getCategoryName = kategorieId => categories.find(category => category.kategorieId === kategorieId)?.bezeichnung ?? kategorieId
@@ -77,6 +78,7 @@ const Rooms = () => {
                 console.log('Erfolg:', result)
                 setRooms(prevRooms => [...prevRooms, result])
                 form.reset()
+                setFormKey(prevKey => prevKey + 1)
                 setShowSuccess(true)
             })
             .catch(error => {
@@ -150,7 +152,7 @@ const Rooms = () => {
             </Typography>
 
             <Paper variant="outlined" sx={{p: 3, mt: 3}}>
-                <form onSubmit={handleSubmit}>
+                <form key={formKey} onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid size={{xs: 12, sm: 6}}>
                             <TextField
