@@ -34,6 +34,7 @@ DELETE FROM buchung
 WHERE status = 'storniert';
 
 -- 8. Abgeschlossene Buchungen löschen (10 Jahre Frist)
+-- (zimmer_buchung zuerst, da FK auf buchung_id)
 DELETE FROM zimmer_buchung
 WHERE buchung_id IN (
     SELECT buchung_id FROM buchung
