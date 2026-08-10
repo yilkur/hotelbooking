@@ -33,6 +33,12 @@ WHERE buchung_id IN (SELECT buchung_id FROM buchung WHERE status = 'storniert');
 DELETE FROM buchung
 WHERE status = 'storniert';
 
--- 8. Zimmer entfernen, die noch nie gebucht wurden
-DELETE FROM zimmer
-WHERE zimmer_id NOT IN (SELECT DISTINCT zimmer_id FROM zimmer_buchung);
+-- 8. Abgeschlossene Buchungen löschen (10 Jahre Frist)
+DELETE FROM zimmer_buchung
+WHERE buchung_id IN (
+    SELECT buchung_id FROM buchung
+    WHERE status = 'abgeschlossen' AND abreisedatum < CURRENT_DATE - INTERVAL '10 years'
+    );
+
+DELETE FROM buchung
+WHERE status = 'abgeschlossen' AND abreisedatum < CURRENT_DATE - INTERVAL '10 years';
