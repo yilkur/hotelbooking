@@ -39,7 +39,7 @@ VALUES (1, 2, '101'),
 INSERT INTO buchung (gast_id, anreisedatum, abreisedatum, status)
 VALUES (1, '2026-09-10', '2026-09-13', 'bestätigt'),
        (1, '2026-11-05', '2026-11-07', 'bestätigt'),
-       (2, '2026-09-20', '2026-09-22', 'abgeschlossen'),
+       (2, '2026-07-20', '2026-07-22', 'abgeschlossen'),
        (3, '2026-10-01', '2026-10-04', 'storniert'),
        (4, '2026-12-20', '2026-12-27', 'bestätigt'),
        (5, '2026-09-11', '2026-09-12', 'bestätigt')
