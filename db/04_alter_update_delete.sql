@@ -20,7 +20,7 @@ SET status = 'abgeschlossen'
 WHERE status = 'bestätigt'
   AND abreisedatum < CURRENT_DATE;
 
--- 6. Telefonnummer eines Gasts anhand der E-mail aktualisieren
+-- 6. Telefonnummer eines Gasts anhand der E-Mail aktualisieren
 UPDATE gast
 SET telefon = '+41 79 000 11 22'
 WHERE email = 'c.studer@mail.ch';

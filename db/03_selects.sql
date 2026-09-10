@@ -28,3 +28,20 @@ FROM zimmer_buchung zb
          JOIN zimmer z ON z.zimmer_id = zb.zimmer_id
          JOIN kategorie k ON k.kategorie_id = z.kategorie_id
 WHERE zb.buchung_id = 1;
+
+-- Abfrage 6: Umsatz pro Hotel
+SELECT h.name AS hotel, SUM(zb.preis_pro_nacht) AS umsatz
+FROM hotel h
+         JOIN zimmer z ON z.hotel_id = h.hotel_id
+         JOIN zimmer_buchung zb ON zb.zimmer_id = z.zimmer_id
+GROUP BY h.hotel_id, h.name
+ORDER BY umsatz DESC;
+
+-- Abfrage 7: Durchschnittspreis pro Kategorie
+SELECT k.bezeichnung, AVG(zb.preis_pro_nacht) AS avg_preis
+FROM kategorie k
+         JOIN zimmer z ON z.kategorie_id = k.kategorie_id
+         JOIN zimmer_buchung zb ON zb.zimmer_id = z.zimmer_id
+GROUP BY k.kategorie_id, k.bezeichnung
+HAVING AVG(zb.preis_pro_nacht) > 100
+ORDER BY avg_preis DESC;
