@@ -52,7 +52,8 @@ const Home = () => {
         return booking.zimmer.reduce((sum, z) => sum + z.preisProNacht * nights, 0)
     }
 
-    const totalRevenue = bookings.reduce((sum, booking) => sum + bookingRevenue(booking), 0)
+    const totalRevenue = bookings.filter(b => b.status !== 'storniert')
+        .reduce((sum, booking) => sum + bookingRevenue(booking), 0)
 
     const revenueByHotel = new Map()
     bookings.forEach(booking => {
