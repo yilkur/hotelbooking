@@ -82,16 +82,24 @@ const Bookings = () => {
             .catch(e => console.error(e))
     }, [])
 
-    const buildBookingFromForm = formData => ({
-        gastId: Number(formData.get("gastId")),
-        anreisedatum: formData.get("anreisedatum"),
-        abreisedatum: formData.get("abreisedatum"),
-        status: formData.get("status"),
-        zimmer: formData.get("zimmerIds").split(',').map(zimmerId => ({
-            zimmerId: Number(zimmerId),
-            preisProNacht: getCategoryPrice(Number(zimmerId))
-        }))
-    })
+    const buildBookingFromForm = (formData, existingBooking = null) => {
+        const zimmerIds = formData.get("zimmerIds").split(',').map(Number)
+        return {
+            gastId: Number(formData.get("gastId")),
+            anreisedatum: formData.get("anreisedatum"),
+            abreisedatum: formData.get("abreisedatum"),
+            status: formData.get("status"),
+            zimmer: zimmerIds.map(zimmerId => {
+                const existing = existingBooking?.zimmer?.find(z => z.zimmerId === zimmerId)
+                return {
+                    zimmerId,
+                    preisProNacht: existing
+                        ? existing.preisProNacht
+                        : getCategoryPrice(zimmerId)
+                }
+            })
+        }
+    }
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -152,7 +160,7 @@ const Bookings = () => {
         e.preventDefault()
 
         const formData = new FormData(e.target)
-        const updatedBooking = buildBookingFromForm(formData)
+        const updatedBooking = buildBookingFromForm(formData, editingBooking)
 
         fetch(`${url}/${editingBooking.buchungId}`, {
             method: 'PUT',

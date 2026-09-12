@@ -2,6 +2,7 @@ package ch.teko.backend.buchung;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,6 +26,7 @@ public class BuchungController {
     }
 
     @PostMapping("/bookings")
+    @Transactional
     public ResponseEntity<Buchung> createBuchung(@RequestBody Buchung buchung) {
         Buchung saved = buchungRepository.save(buchung);
 
@@ -32,13 +34,19 @@ public class BuchungController {
     }
 
     @DeleteMapping("/bookings/{id}")
+    @Transactional
     public ResponseEntity<Void> deleteBuchungById(@PathVariable Long id) {
+        if (!buchungRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
         buchungRepository.deleteById(id);
 
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/bookings/{id}")
+    @Transactional
     public ResponseEntity<Buchung> updateBuchung(@PathVariable Long id, @RequestBody Buchung buchung) {
         return buchungRepository.findById(id)
                 .map(existing -> {
