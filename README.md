@@ -15,7 +15,7 @@ und CRUD-Oberfläche.
 ## Projektstruktur
 
 ```
-hotelbuchung/
+hotelbooking/
 ├── backend/    Spring-Boot-Anwendung (Port 8080)
 ├── frontend/   React + Vite + MUI (Port 5173)
 └── db/         SQL-Skripte (Schema + Testdaten)
@@ -28,6 +28,7 @@ hotelbuchung/
 Datenbank `hotelbooking` in PostgreSQL anlegen und die Skripte aus `db/` ausführen:
 
 ```bash
+createdb hotelbooking
 psql -d hotelbooking -f db/01_schema.sql
 psql -d hotelbooking -f db/02_seed.sql
 ```
