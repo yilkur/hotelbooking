@@ -37,7 +37,7 @@ FROM hotel h
 GROUP BY h.hotel_id, h.name
 ORDER BY umsatz DESC;
 
--- Abfrage 7: Durchschnittspreis pro Kategorie
+-- Abfrage 7: Durchschnittlich gebuchter Preis pro Kategorie
 SELECT k.bezeichnung, AVG(zb.preis_pro_nacht) AS avg_preis
 FROM kategorie k
          JOIN zimmer z ON z.kategorie_id = k.kategorie_id
